@@ -41,10 +41,11 @@ function handlePostNewNote(req, res, next) {
 
 	NotesHandler.postNewNote(req.app.get('db'), newNote)
 		.then(note => {
-			res.status(201)
-				.location(path.posix.join(req.originalUrl, `/${note.id}`))
+			return res
+				.redirect(201, path.posix.join(req.originalUrl, `/${note.id}`))
 				.json(sterilizeNotes(note));
 		})
+
 		.catch(next);
 }
 
